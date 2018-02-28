@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 import datetime
-
+print("test")
 class Person:
     _id = ''
     NAME = ''
