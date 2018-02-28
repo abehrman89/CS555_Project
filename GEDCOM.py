@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 import datetime
-print("test")
+
 class Person:
     _id = ''
     NAME = ''
@@ -23,14 +23,14 @@ def print_people(d):
     table.field_names = ['ID', 'NAME', 'SEX', 'BIRTHDAY', 'DEATH', 'FAMC', 'FAMS']
     for key in d:
         table.add_row([d[key]._id, d[key].NAME, d[key].SEX, d[key].BIRT, d[key].DEAT, d[key].FAMC, d[key].FAMS])
-    print table
+    print(table)
 
 def print_family(d):
     table = PrettyTable()
     table.field_names = ['ID', 'MARRIED', 'DIVORCED', 'HUSBAND ID', 'WIFE ID', 'CHILDREN']
     for key in d:
         table.add_row([d[key]._id, d[key].MARR, d[key].DIV, d[key].HUSB, d[key].WIFE, d[key].CHIL])
-    print table
+    print(table)
 
 def date_format(date):
     months = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6, 
@@ -40,7 +40,7 @@ def date_format(date):
     m = months[split_date[1]]
     y = int(split_date[2])
     date = datetime.date(y, m, d)
-    print date
+    print(date)
     return date
 
 
@@ -134,8 +134,6 @@ def gedcom(file_name):
     print_family(families)
 
 def main():
-    gedcom("testing.txt")
+    gedcom("MyFamilyTreeGEDCOM.txt")
 
 main()
-
-
