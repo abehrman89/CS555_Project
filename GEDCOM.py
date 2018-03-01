@@ -40,9 +40,15 @@ def date_format(date):
     m = months[split_date[1]]
     y = int(split_date[2])
     date = datetime.date(y, m, d)
-    print(date)
+    #print(date)
     return date
 
+def dateverify(date):
+    try:
+        date_format(date)
+    except ValueError:
+        return False
+    return True
 
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
@@ -135,5 +141,8 @@ def gedcom(file_name):
 
 def main():
     gedcom("MyFamilyTreeGEDCOM.txt")
+    print(dateverify("3 FEB 2018"))
 
 main()
+
+
