@@ -106,11 +106,11 @@ def gedcom(file_name):
             if make_indiv == True:
                 if level in tags and tag in tags[level]:
                     if born == True:
-                        if tag == 'DATE': person.BIRT = text
+                        if tag == 'DATE' and dateverify(text): person.BIRT = text
                         born = False
                         continue
                     if died == True:
-                        if tag == 'DATE': person.DEAT = text
+                        if tag == 'DATE' and dateverify(text): person.DEAT = text
                         died = False
                         continue
                     if tag == 'NAME': person.NAME = text
@@ -123,11 +123,11 @@ def gedcom(file_name):
             if make_fam == True:
                 if level in tags and tag in tags[level]:
                     if married == True:
-                        if tag == 'DATE': family.MARR = text
+                        if tag == 'DATE' and dateverify(text): family.MARR = text
                         married = False
                         continue
                     if divorced == True:
-                        if tag == 'DATE': family.DIV = text
+                        if tag == 'DATE' and dateverify(text): family.DIV = text
                         divorced = False
                         continue
                     if tag == 'HUSB': family.HUSB = text
@@ -144,5 +144,3 @@ def main():
     print(dateverify("3 FEB 2018"))
 
 main()
-
-
