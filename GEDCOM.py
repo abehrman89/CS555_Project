@@ -40,7 +40,6 @@ def date_format(date):
     m = months[split_date[1]]
     y = int(split_date[2])
     date = datetime.date(y, m, d)
-    #print(date)
     return date
 
 def dateverify(date):
@@ -49,6 +48,9 @@ def dateverify(date):
     except ValueError:
         return False
     return True
+
+def us03(birth, death):
+    return birth < death
 
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
@@ -61,7 +63,8 @@ def gedcom(file_name):
     died = False
     married = False
     divorced = False
-
+    valid = False
+    
     people = {}
     families = {}
 
@@ -83,9 +86,9 @@ def gedcom(file_name):
                 tag, text = text, tag
             
             if level == 0:
-                if make_indiv == True:
+                if make_indiv == True and valid == True:
                     people[person._id] = person
-                    make_indiv = False
+                make_indiv = False
                 if tag == 'INDI' and make_indiv == False:
                     make_indiv = True
                     person = Person()
@@ -110,7 +113,11 @@ def gedcom(file_name):
                         born = False
                         continue
                     if died == True:
-                        if tag == 'DATE' and dateverify(text): person.DEAT = text
+                        if tag == 'DATE' and dateverify(text): 
+                            person.DEAT = text
+                            birth = date_format(person.BIRT)
+                            death = date_format(person.DEAT)
+                        valid = us03(birth, death)
                         died = False
                         continue
                     if tag == 'NAME': person.NAME = text
@@ -136,11 +143,12 @@ def gedcom(file_name):
                     elif tag == 'MARR': married = True
                     elif tag == 'DIV': divorced = True
     
-    print_people(people)
-    print_family(families)
+    return people, families
 
 def main():
-    gedcom("MyFamilyTreeGEDCOM.txt")
+    ppl, fam = gedcom("testing.txt")
+    print_people(ppl)
+    print_family(fam)
     print(dateverify("3 FEB 2018"))
 
 main()
