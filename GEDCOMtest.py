@@ -21,3 +21,16 @@ class Test(unittest.TestCase):
 
         US42d5 = "31 DEC 2010"
         self.assertEqual(dateverify(US42d5), True)
+   
+    def test03(self):
+        date1 = datetime.date(2010, 1, 7)
+        date2 = datetime.date(2011, 2, 8)
+        date3 = datetime.date(2012, 3, 9)
+        date4 = datetime.date(2013, 4, 10)
+        date5 = datetime.date(2014, 5, 11)
+
+        self.assertEqual(us03(date1, date2), True)
+        self.assertEqual(us03(date2, date1), False)
+        self.assertEqual(us03(date3, date4), True)
+        self.assertEqual(us03(date5, date4), False)
+        self.assertEqual(us03(date4, date4), False)
