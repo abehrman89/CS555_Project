@@ -12,7 +12,7 @@ class Person:
 
 class Family:
     _id = ''
-    MARR = ''
+    MARR = 'N/A'
     DIV = 'N/A'
     HUSB = ''
     WIFE = ''
@@ -68,9 +68,9 @@ def datecheck(indi, fam):
             dbeforecurrent(value.DEAT)
         
     for key,value in fam.items():
-        if value.MARR != "":
+        if value.MARR != "N/A" and value.MARR != "":
             dbeforecurrent(value.MARR)
-        if value.DIV != "" and value.DIV != "N/A":
+        if value.DIV != "N/A" and value.DIV != "":
             dbeforecurrent(value.DIV)
 
 def us03(person):
