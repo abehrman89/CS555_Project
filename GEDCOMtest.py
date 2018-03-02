@@ -3,6 +3,8 @@ import sys
 import datetime
 from io import StringIO
 from GEDCOM import dateverify
+from GEDCOM import us03
+from GEDCOM import Person
 
 class Test(unittest.TestCase):
 
@@ -23,14 +25,34 @@ class Test(unittest.TestCase):
         self.assertEqual(dateverify(US42d5), True)
    
     def test03(self):
-        date1 = datetime.date(2010, 1, 7)
-        date2 = datetime.date(2011, 2, 8)
-        date3 = datetime.date(2012, 3, 9)
-        date4 = datetime.date(2013, 4, 10)
-        date5 = datetime.date(2014, 5, 11)
+        p1 = Person()
+        p2 = Person()
+        p3 = Person()       
+        p4 = Person()
+        p5 = Person()
 
-        self.assertEqual(us03(date1, date2), True)
-        self.assertEqual(us03(date2, date1), False)
-        self.assertEqual(us03(date3, date4), True)
-        self.assertEqual(us03(date5, date4), False)
-        self.assertEqual(us03(date4, date4), False)
+        date1 = "7 JAN 2010"
+        date2 = "8 FEB 2011"
+        date3 = "9 MAR 2012"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        p1.BIRT = date1
+        p1.DEAT = date2
+        self.assertEqual(us03(p1), True)
+
+        p2.BIRT = date2
+        p2.DEAT = date1
+        self.assertEqual(us03(p2), False)
+
+        p3.BIRT = date3
+        p3.DEAT = date4
+        self.assertEqual(us03(p3), True)
+
+        p4.BIRT = date5
+        p4.DEAT = date4
+        self.assertEqual(us03(p4), False)
+
+        p5.BIRT = date4
+        p5.DEAT = date4
+        self.assertEqual(us03(p5), False)
