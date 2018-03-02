@@ -1,12 +1,12 @@
 import unittest
 import sys
 import datetime
-from GEDCOM import us03
-from GEDCOM import us02
-from GEDCOM import dateverify
-from GEDCOM import Person
-from GEDCOM import Family
 from io import StringIO
+from GEDCOM import dateverify
+from GEDCOM import us03
+from GEDCOM import Person
+from GEDCOM import us02
+from GEDCOM import Family
 
 class Test(unittest.TestCase):
 

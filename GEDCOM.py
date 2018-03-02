@@ -62,7 +62,7 @@ def us02(person, family):
     marriage = date_format(family.MARR)
     if birth < marriage:
         return True
-    print('Error US02: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after the date they were married.')
+    print ('Error US02: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after the date they were married.')
     return False
 
 def gedcom(file_name):
