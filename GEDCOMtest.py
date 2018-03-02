@@ -59,7 +59,6 @@ class Test(unittest.TestCase):
         p5.DEAT = date4
         self.assertEqual(us03(p5), False)
 
-
     def test02(self):
         p1 = Person()
         p2 = Person()
