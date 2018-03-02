@@ -12,7 +12,7 @@ class Person:
 
 class Family:
     _id = ''
-    MARR = ''
+    MARR = 'N/A'
     DIV = 'N/A'
     HUSB = ''
     WIFE = ''
@@ -49,8 +49,21 @@ def dateverify(date):
         return False
     return True
 
-def us03(birth, death):
-    return birth < death
+def us03(person):
+    death = date_format(person.DEAT)
+    birth = date_format(person.BIRT)
+    if birth < death:
+        return True
+    print('Error US03: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after their date of death.')
+    return False
+
+def us02(person, family):
+    birth = date_format(person.BIRT)
+    marriage = date_format(family.MARR)
+    if birth < marriage:
+        return True
+    print('Error US02: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after the date they were married.')
+    return False
 
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
@@ -63,7 +76,6 @@ def gedcom(file_name):
     died = False
     married = False
     divorced = False
-    valid = False
     
     people = {}
     families = {}
@@ -86,7 +98,7 @@ def gedcom(file_name):
                 tag, text = text, tag
             
             if level == 0:
-                if make_indiv == True and (valid == True or person.DEAT == 'N/A'):
+                if make_indiv == True:
                     people[person._id] = person
                 make_indiv = False
                 if tag == 'INDI' and make_indiv == False:
@@ -98,6 +110,8 @@ def gedcom(file_name):
                     continue
                 if make_fam == True:
                     families[family._id] = family
+                    us02(people[family.HUSB], family)
+                    us02(people[family.WIFE], family)
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
@@ -109,15 +123,15 @@ def gedcom(file_name):
             if make_indiv == True:
                 if level in tags and tag in tags[level]:
                     if born == True:
-                        if tag == 'DATE' and dateverify(text): person.BIRT = text
+                        if tag == 'DATE' and dateverify(text): 
+                            person.BIRT = text
+                            if person.DEAT != 'N/A': us03(person)
                         born = False
                         continue
                     if died == True:
                         if tag == 'DATE' and dateverify(text): 
                             person.DEAT = text
-                            birth = date_format(person.BIRT)
-                            death = date_format(person.DEAT)
-                        valid = us03(birth, death)
+                            if person.BIRT != 'N/A': us03(person)
                         died = False
                         continue
                     if tag == 'NAME': person.NAME = text
