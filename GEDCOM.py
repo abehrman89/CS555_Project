@@ -86,7 +86,7 @@ def gedcom(file_name):
                 tag, text = text, tag
             
             if level == 0:
-                if make_indiv == True and valid == True:
+                if make_indiv == True and (valid == True or person.DEAT == 'N/A'):
                     people[person._id] = person
                 make_indiv = False
                 if tag == 'INDI' and make_indiv == False:
