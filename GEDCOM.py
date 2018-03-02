@@ -12,7 +12,7 @@ class Person:
 
 class Family:
     _id = ''
-    MARR = ''
+    MARR = 'N/A'
     DIV = 'N/A'
     HUSB = ''
     WIFE = ''
@@ -55,6 +55,14 @@ def us03(person):
     if birth < death:
         return True
     print('Error US03: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after their date of death.')
+    return False
+
+def us02(person, family):
+    birth = date_format(person.BIRT)
+    marriage = date_format(family.MARR)
+    if birth < marriage:
+        return True
+    print ('Error US02: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after the date they were married.')
     return False
 
 def gedcom(file_name):
@@ -102,6 +110,8 @@ def gedcom(file_name):
                     continue
                 if make_fam == True:
                     families[family._id] = family
+                    us02(people[family.HUSB], family)
+                    us02(people[family.WIFE], family)
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
