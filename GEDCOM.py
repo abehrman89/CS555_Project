@@ -134,8 +134,9 @@ def gedcom(file_name):
                     continue
                 if make_fam == True:
                     families[family._id] = family
-                    us02(people[family.HUSB], family)
-                    us02(people[family.WIFE], family)
+                    if family.MARR != 'N/A':
+                        us02(people[family.HUSB], family)
+                        us02(people[family.WIFE], family)
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
