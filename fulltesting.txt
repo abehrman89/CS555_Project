@@ -1,0 +1,127 @@
+0 NOTE Laura Oliveto - I pledge my honor that I have abided by the Stevens Honor System.
+0 NOTE I used the site "Family Echo" to create this family tree.
+1 SOUR Family Echo
+2 WWW http://www.familyecho.com/
+1 FILE My Family
+1 DATE 28 JAN 2018
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 SUBM @I1@
+2 NAME laura
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Laura /Oliveto/
+2 GIVN Laura
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 1 AUG 2097
+1 FAMC @F1@
+0 @I2@ INDI
+1 NAME Gerardo /Oliveto/
+2 GIVN Gerardo
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX M
+1 BIRT
+2 DATE 1 SEP 1969
+1 DEAT Y
+2 DATE 1 JAN 1999
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I3@ INDI
+1 NAME Marjorie /Zarama/
+2 GIVN Marjorie
+2 SURN Zarama
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 16 JAN 1972
+1 FAMS @F1@
+1 FAMS @F3@
+0 @I4@ INDI
+1 NAME Marcello /Oliveto/
+2 GIVN Marcello
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX M
+1 BIRT
+2 DATE 35 DEC 1999
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Angela /Oliveto/
+2 GIVN Angela
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 14 JUN 2006
+1 FAMC @F1@
+0 @I6@ INDI
+1 NAME Felipe /Lopez/
+2 GIVN Felipe
+2 SURN Lopez
+2 _MARNM Lopez
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 1972
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME Antonio /Oliveto/
+2 GIVN Antonio
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 1930
+1 DEAT Y
+2 DATE 1 FEB 1910
+1 FAMS @F2@
+0 @I8@ INDI
+1 NAME Teresa /Cianci/
+2 GIVN Teresa
+2 SURN Cianci
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 4 JUN 1932
+1 DEAT Y
+2 DATE 10 FEB 2014
+1 FAMS @F2@
+0 @I9@ INDI
+1 NAME Steven /Lopez/
+2 GIVN Steven
+2 SURN Lopez
+2 _MARNM Lopez
+1 SEX M
+1 BIRT
+2 DATE 6 MAR 2005
+1 FAMC @F3@
+0 @F1@ FAM
+1 MARR
+2 DATE 1 JUN 1810
+1 HUSB @I2@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I4@
+1 CHIL @I5@
+1 _CURRENT N
+0 @F2@ FAM
+1 HUSB @I7@
+1 WIFE @I8@
+1 CHIL @I2@
+1 _CURRENT Y
+0 @F3@ FAM
+1 HUSB @I6@
+1 WIFE @I3@
+1 CHIL @I9@
+1 MARR
+2 DATE 1 JUN 2010
+1 DIV
+2 DATE 1 JUN 2014
+1 _CURRENT Y
+0 TRLR
