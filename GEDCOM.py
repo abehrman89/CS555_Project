@@ -89,6 +89,14 @@ def us02(person, family):
     print ('Error US02: Birth date of ' + person.NAME + ' (' + person._id + ') occurs after the date they were married.')
     return False
 
+def us04(family):
+    marriage = date_format(family.MARR)
+    divorce = date_format(family.DIV)
+    if marriage < divorce:
+        return True
+    print('Error US04: Marriage date of ' + family._id + ' occurs after the divorce date.')
+    return False
+
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
             1:["NAME", "SEX", "BIRT", "DEAT","FAMC", "FAMS", "MARR", "HUSB", "WIFE", "CHIL", "DIV"], 
@@ -123,6 +131,7 @@ def gedcom(file_name):
             
             if level == 0:
                 if make_indiv == True:
+                    if person.BIRT != 'N/A' and person.DEAT != 'N/A': us03(person)
                     people[person._id] = person
                 make_indiv = False
                 if tag == 'INDI' and make_indiv == False:
@@ -137,6 +146,7 @@ def gedcom(file_name):
                     if family.MARR != 'N/A':
                         us02(people[family.HUSB], family)
                         us02(people[family.WIFE], family)
+                        if family.DIV != 'N/A': us04(family)
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
@@ -148,15 +158,11 @@ def gedcom(file_name):
             if make_indiv == True:
                 if level in tags and tag in tags[level]:
                     if born == True:
-                        if tag == 'DATE':
-                            person.BIRT = text
-                            if person.DEAT != 'N/A': us03(person)
+                        if tag == 'DATE': person.BIRT = text
                         born = False
                         continue
                     if died == True:
-                        if tag == 'DATE': 
-                            person.DEAT = text
-                            if person.BIRT != 'N/A': us03(person)
+                        if tag == 'DATE': person.DEAT = text
                         died = False
                         continue
                     if tag == 'NAME': person.NAME = text
@@ -185,9 +191,9 @@ def gedcom(file_name):
     return people, families
 
 def main():
-    ppl, fam = gedcom("MyFamilyTreeGEDCOM.txt")
+    ppl, fam = gedcom("fulltesting.txt")
+    datecheck(ppl, fam)
     print_people(ppl)
     print_family(fam)
-    datecheck(ppl, fam)
 
 main()
