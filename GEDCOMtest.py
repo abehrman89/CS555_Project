@@ -8,6 +8,7 @@ from GEDCOM import Person
 from GEDCOM import us02
 from GEDCOM import Family
 from GEDCOM import dbeforecurrent
+from GEDCOM import us04
 
 class Test(unittest.TestCase):
 
@@ -114,3 +115,36 @@ class Test(unittest.TestCase):
 
         US01d5 = "18 NOV 3014"
         self.assertEqual(dbeforecurrent(US01d5), False)
+    
+        def test04(self):
+        f1 = Family()
+        f2 = Family()
+        f3 = Family()       
+        f4 = Family()
+        f5 = Family()
+
+        date1 = "7 JAN 2010"
+        date2 = "8 FEB 2011"
+        date3 = "9 MAR 2012"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        f1.MARR = date1
+        f1.DIV = date2
+        self.assertEqual(us04(f1), True)
+
+        f2.MARR = date2
+        f2.DIV = date1
+        self.assertEqual(us04(f2), False)
+
+        f3.MARR = date3
+        f3.DIV = date4
+        self.assertEqual(us04(f3), True)
+
+        f4.MARR = date5
+        f4.DIV = date4
+        self.assertEqual(us04(f4), False)
+
+        f5.MARR = date4
+        f5.DIV = date4
+        self.assertEqual(us04(f5), False)
