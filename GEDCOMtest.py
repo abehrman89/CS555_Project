@@ -9,6 +9,7 @@ from GEDCOM import us02
 from GEDCOM import Family
 from GEDCOM import dbeforecurrent
 from GEDCOM import us04
+from GEDCOM import deceasedlist
 
 class Test(unittest.TestCase):
 
@@ -108,7 +109,7 @@ class Test(unittest.TestCase):
         self.assertEqual(dbeforecurrent(US01d2), False)
 
         US01d3 = "3 MAR 2018"
-        self.assertEqual(dbeforecurrent(US01d3), False)
+        self.assertEqual(dbeforecurrent(US01d3), True)
 
         US01d4 = "23 OCT 1987"
         self.assertEqual(dbeforecurrent(US01d4), True)
@@ -116,7 +117,7 @@ class Test(unittest.TestCase):
         US01d5 = "18 NOV 3014"
         self.assertEqual(dbeforecurrent(US01d5), False)
     
-        def test04(self):
+    def test04(self):
         f1 = Family()
         f2 = Family()
         f3 = Family()       
@@ -148,3 +149,43 @@ class Test(unittest.TestCase):
         f5.MARR = date4
         f5.DIV = date4
         self.assertEqual(us04(f5), False)
+
+    def test29(self):
+        us29p1 = Person()
+        us29p2 = Person()
+        us29p3 = Person()
+        us29p4 = Person()
+        us29p5 = Person()
+        
+        us29p1._id = "@I1@"
+        us29p2._id = "@I2@"
+        us29p3._id = "@I3@"       
+        us29p4._id = "@I4@"
+        us29p5._id = "@I5@"
+
+        us29p1.NAME = "Person 1"
+        us29p2.NAME = "Person 2"
+        us29p3.NAME = "Person 3"       
+        us29p4.NAME = "Person 4"
+        us29p5.NAME = "Person 5"
+
+        us29p1.DEAT = "7 JAN 2010"
+        us29p2.DEAT = ""
+        us29p3.DEAT = "9 MAR 2012"       
+        us29p4.DEAT = "10 APR 2013"
+        us29p5.DEAT = "N/A"
+
+        us29dic = {0:us29p1}
+        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@'])
+
+        us29dic = {"@I1@":us29p1, "@I2@":us29p2}
+        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@'])
+
+        us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3}
+        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@'])
+
+        us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3, "@I4@":us29p4}
+        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@', 'Person 4, @I4@'])
+
+        us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3, "@I4@":us29p4, "@I5@":us29p5}
+        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@', 'Person 4, @I4@'])
