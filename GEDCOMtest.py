@@ -189,3 +189,42 @@ class Test(unittest.TestCase):
 
         us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3, "@I4@":us29p4, "@I5@":us29p5}
         self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@', 'Person 4, @I4@'])
+
+    def test05(self):
+        p1 = Person()
+        p2 = Person()
+        p3 = Person()       
+        p4 = Person()
+        p5 = Person()
+
+        f1 = Family()
+        f2 = Family()
+        f3 = Family()
+        f4 = Family()
+        f5 = Family()
+
+        date1 = "7 JAN 2010"
+        date2 = "8 FEB 2011"
+        date3 = "9 MAR 2012"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        p1.DEAT = date1
+        f1.MARR = date2
+        self.assertEqual(us05(p1, f1), False)
+        
+        p2.DEAT = date2
+        f2.MARR = date1
+        self.assertEqual(us05(p2, f2), True)
+
+        p3.DEAT = date3
+        f3.MARR = date4
+        self.assertEqual(us05(p3, f3), False)
+
+        p4.DEAT = date5
+        f4.MARR = date4
+        self.assertEqual(us05(p4, f4), True)
+
+        p5.DEAT = date4
+        f5.MARR = date4
+        self.assertEqual(us05(p5, f5), False)
