@@ -10,6 +10,8 @@ from GEDCOM import Family
 from GEDCOM import dbeforecurrent
 from GEDCOM import us04
 from GEDCOM import deceasedlist
+from GEDCOM import us05
+from GEDCOM import findage
 
 class Test(unittest.TestCase):
 
@@ -228,3 +230,10 @@ class Test(unittest.TestCase):
         p5.DEAT = date4
         f5.MARR = date4
         self.assertEqual(us05(p5, f5), False)
+
+    def test27(self):
+        self.assertEqual(findage("1 AUG 1997"), 20)
+        self.assertEqual(findage("15 DEC 1999"), 18)
+        self.assertEqual(findage("30 OCT 1897"), 120)
+        self.assertEqual(findage("1 SEP 1969"), 48)
+        self.assertEqual(findage("14 JUN 2006"), 11)
