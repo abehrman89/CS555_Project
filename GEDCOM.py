@@ -75,12 +75,17 @@ def datecheck(indi, fam):
             dbeforecurrent(value.DIV)
 
 def deceasedlist(indi):
+    #user story 29
     dlist = []
     for key,value in indi.items():
         if value.DEAT != "N/A" and value.DEAT !="":
             dlist.append(value.NAME + ", " + value._id)
     print("List of the deceased: " + str(dlist))
     return dlist
+
+def findage(date):
+    #user story 27
+    return int((datetime.date.today() - date_format(date)).days/365.25)
 
 def us03(person):
     death = date_format(person.DEAT)
@@ -180,7 +185,7 @@ def gedcom(file_name):
                         if tag == 'DATE':
                             person.BIRT = text
                             if dateverify(text) and dbeforecurrent(text):
-                                person.AGE = round((datetime.date.today() - date_format(text)).days/365.25)
+                                person.AGE = findage(text)
                         born = False
                         continue
                     if died == True:
@@ -213,7 +218,7 @@ def gedcom(file_name):
     return people, families
 
 def main():
-    ppl, fam = gedcom("fulltesting.txt")
+    ppl, fam = gedcom("MyFamilyTreeGEDCOM.txt")
     datecheck(ppl, fam)
     print_people(ppl)
     print_family(fam)
