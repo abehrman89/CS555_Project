@@ -106,6 +106,14 @@ def us04(family):
     print('Error US04: Marriage date of ' + family._id + ' occurs after the divorce date.')
     return False
 
+def us05(person, family):
+    marriage = date_format(family.MARR)
+    death = date_format(person.DEAT)
+    if marriage < death:
+        return True
+    print ('Error US05: Date of death of ' + person.NAME + ' (' + person._id + ') occurs before the date they were married.')
+    return False
+
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
             1:["NAME", "SEX", "BIRT", "DEAT","FAMC", "FAMS", "MARR", "HUSB", "WIFE", "CHIL", "DIV"], 
@@ -156,6 +164,8 @@ def gedcom(file_name):
                         us02(people[family.HUSB], family)
                         us02(people[family.WIFE], family)
                         if family.DIV != 'N/A': us04(family)
+                        if people[family.HUSB].DEAT != 'N/A': us05(people[family.HUSB], family)
+                        if people[family.WIFE].DEAT != 'N/A': us05(people[family.WIFE], family)                       
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
@@ -203,7 +213,7 @@ def gedcom(file_name):
     return people, families
 
 def main():
-    ppl, fam = gedcom("MyFamilyTreeGEDCOM.txt")
+    ppl, fam = gedcom("fulltesting.txt")
     datecheck(ppl, fam)
     print_people(ppl)
     print_family(fam)
