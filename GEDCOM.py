@@ -219,7 +219,7 @@ def gedcom(file_name):
     return people, families
 
 def main():
-    ppl, fam = gedcom("MyFamilyTreeGEDCOM.txt")
+    ppl, fam = gedcom("fulltesting.txt")
     datecheck(ppl, fam)
     print_people(ppl)
     print_family(fam)
