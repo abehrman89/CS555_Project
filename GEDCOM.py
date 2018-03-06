@@ -73,6 +73,14 @@ def datecheck(indi, fam):
         if value.DIV != "N/A" and value.DIV != "":
             dbeforecurrent(value.DIV)
 
+def deceasedlist(indi):
+    dlist = []
+    for key,value in indi.items():
+        if value.DEAT != "N/A" and value.DEAT !="":
+            dlist.append(value.NAME + ", " + value._id)
+    print("List of the deceased: " + str(dlist))
+    return dlist
+
 def us03(person):
     death = date_format(person.DEAT)
     birth = date_format(person.BIRT)
@@ -191,9 +199,10 @@ def gedcom(file_name):
     return people, families
 
 def main():
-    ppl, fam = gedcom("fulltesting.txt")
+    ppl, fam = gedcom("MyFamilyTreeGEDCOM.txt")
     datecheck(ppl, fam)
     print_people(ppl)
     print_family(fam)
+    deceasedlist(ppl)
 
 main()
