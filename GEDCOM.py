@@ -9,6 +9,7 @@ class Person:
     DEAT = 'N/A'
     FAMC = []
     FAMS = []
+    AGE = 'N/A'
 
 class Family:
     _id = ''
@@ -20,9 +21,9 @@ class Family:
 
 def print_people(d):
     table = PrettyTable()
-    table.field_names = ['ID', 'NAME', 'SEX', 'BIRTHDAY', 'DEATH', 'FAMC', 'FAMS']
+    table.field_names = ['ID', 'NAME', 'SEX', 'BIRTHDAY', 'AGE', 'DEATH', 'FAMC', 'FAMS']
     for key in d:
-        table.add_row([d[key]._id, d[key].NAME, d[key].SEX, d[key].BIRT, d[key].DEAT, d[key].FAMC, d[key].FAMS])
+        table.add_row([d[key]._id, d[key].NAME, d[key].SEX, d[key].BIRT, d[key].AGE, d[key].DEAT, d[key].FAMC, d[key].FAMS])
     print(table)
 
 def print_family(d):
@@ -166,7 +167,10 @@ def gedcom(file_name):
             if make_indiv == True:
                 if level in tags and tag in tags[level]:
                     if born == True:
-                        if tag == 'DATE': person.BIRT = text
+                        if tag == 'DATE':
+                            person.BIRT = text
+                            if dateverify(text) and dbeforecurrent(text):
+                                person.AGE = round((datetime.date.today() - date_format(text)).days/365.25)
                         born = False
                         continue
                     if died == True:
