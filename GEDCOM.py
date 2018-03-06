@@ -1,6 +1,5 @@
 from prettytable import PrettyTable
 import datetime
-#laura's test branch
 
 class Person:
     _id = ''
