@@ -103,6 +103,25 @@ def livingmarriedlist(indi, fam):
     print("List of living and married: " + str(lmlist))
     return lmlist
 
+def singlelist(indi, fam):
+    #user story 31
+    otlist = []
+    mlist = []
+    sotlist = []
+    for key,value in indi.items():
+        if value.AGE != "N/A":
+            if int(value.AGE) >= 30:
+                otlist.append(value._id)
+    for key,value in fam.items():
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+            mlist.append(value.HUSB)
+            mlist.append(value.WIFE)
+    for i in otlist:
+        if i not in mlist:
+            sotlist.append(i)
+    print("List of single and over 30: " + str(sotlist))
+    return sotlist
+
 def findage(date):
     #user story 27
     return int((datetime.date.today() - date_format(date)).days/365.25)
@@ -244,5 +263,6 @@ def main():
     print_family(fam)
     deceasedlist(ppl)
     livingmarriedlist(ppl, fam)
+    singlelist(ppl, fam)
 
 main()
