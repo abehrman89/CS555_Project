@@ -77,11 +77,31 @@ def datecheck(indi, fam):
 def deceasedlist(indi):
     #user story 29
     dlist = []
+    didlist = []
     for key,value in indi.items():
         if value.DEAT != "N/A" and value.DEAT !="":
             dlist.append(value.NAME + ", " + value._id)
+            didlist.append(value._id)
     print("List of the deceased: " + str(dlist))
-    return dlist
+    return didlist
+
+def livingmarriedlist(indi, fam):
+    #user story 30
+    llist = []
+    mlist = []
+    lmlist = []
+    for key,value in indi.items():
+        if value.DEAT == "N/A":
+            llist.append(value._id)
+    for key,value in fam.items():
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+            mlist.append(value.HUSB)
+            mlist.append(value.WIFE)
+    for i in llist:
+        if i in mlist:
+            lmlist.append(i)
+    print("List of living and married: " + str(lmlist))
+    return lmlist
 
 def findage(date):
     #user story 27
@@ -223,5 +243,6 @@ def main():
     print_people(ppl)
     print_family(fam)
     deceasedlist(ppl)
+    livingmarriedlist(ppl, fam)
 
 main()
