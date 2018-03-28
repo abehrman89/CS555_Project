@@ -2,17 +2,8 @@ import unittest
 import sys
 import datetime
 from io import StringIO
-from GEDCOM import dateverify
-from GEDCOM import us03
-from GEDCOM import Person
-from GEDCOM import us02
-from GEDCOM import Family
-from GEDCOM import dbeforecurrent
-from GEDCOM import us04
-from GEDCOM import deceasedlist
-from GEDCOM import us05
-from GEDCOM import findage
-from GEDCOM import livingmarriedlist
+from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
+from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist
 
 class Test(unittest.TestCase):
 
@@ -299,3 +290,52 @@ class Test(unittest.TestCase):
         us30dic = {"@I1@":us30p1, "@I2@":us30p2, "@I3@":us30p3, "@I4@":us30p4}
         us30dicf = {"@F1@":us30f1, "@F2@":us30f2}
         self.assertEqual(livingmarriedlist(us30dic, us30dicf), [])
+
+    def test31(self):
+        us31p1 = Person()
+        us31p2 = Person()
+        us31p3 = Person()
+        us31p4 = Person()
+
+        us31p1._id, us31p1.AGE = "@I1@", 25
+        us31p2._id, us31p2.AGE = "@I2@", 31
+        us31p3._id, us31p3.AGE = "@I3@", 45
+        us31p4._id, us31p4.AGE = "@I4@", 36
+
+        us31f1 = Family()
+        us31f2 = Family()
+
+        us31f1._id = "@F1@"
+        us31f2._id = "@F2@"
+
+        us31f1.HUSB = us31p1._id
+        us31f1.WIFE = us31p2._id
+        us31f2.HUSB = us31p3._id
+        us31f2.WIFE = us31p4._id
+
+        us31f1.MARR = "1 JUN 2009"
+        us31f1.DIV = "N/A"
+        us31f2.MARR = "1 JUN 2009"
+        us31f1.DIV = "N/A"
+
+        us31dic = {"@I1@":us31p1, "@I2@":us31p2}
+        us31dicf = {"@F1@":us31f1}
+        self.assertEqual(singlelist(us31dic, us31dicf), [])
+
+        us31f1.MARR = "N/A"
+        us31dic = {"@I1@":us31p1, "@I2@":us31p2}
+        us31dicf = {"@F1@":us31f1}
+        self.assertEqual(singlelist(us31dic, us31dicf), ["@I2@"])
+
+        us31dic = {"@I3@":us31p3, "@I4@":us31p4}
+        us31dicf = {"@F2@":us31f2}
+        self.assertEqual(singlelist(us31dic, us31dicf), [])
+
+        us31dic = {"@I1@":us31p1, "@I2@":us31p2, "@I3@":us31p3, "@I4":us31p4}
+        us31dicf = {"@F1@":us31f1, "@F2@":us31f2}
+        self.assertEqual(singlelist(us31dic, us31dicf), ["@I2@"])
+
+        us31f2.MARR = "N/A"
+        us31dic = {"@I1@":us31p1, "@I2@":us31p2, "@I3@":us31p3, "@I4":us31p4}
+        us31dicf = {"@F1@":us31f1, "@F2@":us31f2}
+        self.assertEqual(singlelist(us31dic, us31dicf), ["@I2@", "@I3@", "@I4@"])
