@@ -12,6 +12,7 @@ from GEDCOM import us04
 from GEDCOM import deceasedlist
 from GEDCOM import us05
 from GEDCOM import findage
+from GEDCOM import livingmarriedlist
 
 class Test(unittest.TestCase):
 
@@ -178,19 +179,19 @@ class Test(unittest.TestCase):
         us29p5.DEAT = "N/A"
 
         us29dic = {0:us29p1}
-        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@'])
+        self.assertEqual(deceasedlist(us29dic), ['@I1@'])
 
         us29dic = {"@I1@":us29p1, "@I2@":us29p2}
-        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@'])
+        self.assertEqual(deceasedlist(us29dic), ['@I1@'])
 
         us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3}
-        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@'])
+        self.assertEqual(deceasedlist(us29dic), ['@I1@', '@I3@'])
 
         us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3, "@I4@":us29p4}
-        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@', 'Person 4, @I4@'])
+        self.assertEqual(deceasedlist(us29dic), ['@I1@', '@I3@', '@I4@'])
 
         us29dic = {"@I1@":us29p1, "@I2@":us29p2, "@I3@":us29p3, "@I4@":us29p4, "@I5@":us29p5}
-        self.assertEqual(deceasedlist(us29dic), ['Person 1, @I1@', 'Person 3, @I3@', 'Person 4, @I4@'])
+        self.assertEqual(deceasedlist(us29dic), ['@I1@', '@I3@', '@I4@'])
 
     def test05(self):
         p1 = Person()
@@ -237,3 +238,64 @@ class Test(unittest.TestCase):
         self.assertEqual(findage("30 OCT 1897"), 120)
         self.assertEqual(findage("1 SEP 1969"), 48)
         self.assertEqual(findage("14 JUN 2006"), 11)
+
+    def test30(self):
+        us30p1 = Person()
+        us30p2 = Person()
+        us30p3 = Person()
+        us30p4 = Person()
+
+        us30f1 = Family()
+        us30f2 = Family()
+        
+        us30p1._id = "@I1@"
+        us30p2._id = "@I2@"
+        us30p3._id = "@I3@"       
+        us30p4._id = "@I4@"
+
+        us30f1._id = "@F1@"
+        us30f2._id = "@F2@"
+
+        us30f1.HUSB = us30p1._id
+        us30f1.WIFE = us30p2._id
+        us30f2.HUSB = us30p3._id
+        us30f2.WIFE = us30p4._id
+
+        us30p1.NAME = "Person 1"
+        us30p2.NAME = "Person 2"
+        us30p3.NAME = "Person 3"       
+        us30p4.NAME = "Person 4"
+
+        us30p1.DEAT = "7 JAN 2010"
+        us30p2.DEAT = "N/A"
+        us30p3.DEAT = "N/A"       
+        us30p4.DEAT = "N/A"
+
+        us30f1.MARR = "1 JUN 2009"
+        us30f1.DIV = "N/A"
+
+        us30f2.MARR = "1 JUN 2009"
+        us30f1.DIV = "N/A"
+
+        us30dic = {"@I1@":us30p1, "@I2@":us30p2}
+        us30dicf = {"@F1@":us30f1}
+        self.assertEqual(livingmarriedlist(us30dic, us30dicf), [])
+
+        us30p1.DEAT = "N/A"
+        us30dic = {"@I1@":us30p1, "@I2@":us30p2}
+        us30dicf = {"@F1@":us30f1}
+        self.assertEqual(livingmarriedlist(us30dic, us30dicf), ["@I1@", "@I2@"])
+
+        us30dic = {"@I1@":us30p1, "@I2@":us30p2, "@I3@":us30p3, "@I4@":us30p4}
+        us30dicf = {"@F1@":us30f1, "@F2@":us30f2}
+        self.assertEqual(livingmarriedlist(us30dic, us30dicf), ["@I1@", "@I2@", "@I3@", "@I4@"])
+
+        us30dic = {"@I3@":us30p3, "@I4@":us30p4}
+        us30dicf = {"@F2@":us30f2}
+        self.assertEqual(livingmarriedlist(us30dic, us30dicf), ["@I3@", "@I4@"])
+
+        us30p1.DEAT = "7 JAN 2010"
+        us30f2.DIV = "2 JUN 2009"
+        us30dic = {"@I1@":us30p1, "@I2@":us30p2, "@I3@":us30p3, "@I4@":us30p4}
+        us30dicf = {"@F1@":us30f1, "@F2@":us30f2}
+        self.assertEqual(livingmarriedlist(us30dic, us30dicf), [])
