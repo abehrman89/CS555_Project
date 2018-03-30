@@ -3,7 +3,7 @@ import sys
 import datetime
 from io import StringIO
 from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
-from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist
+from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist, us06, us07
 
 class Test(unittest.TestCase):
 
@@ -378,3 +378,42 @@ class Test(unittest.TestCase):
         p5.DEAT = date4
         f5.DIV = date4
         self.assertEqual(us06(p5, f5), False)
+
+    def test07(self):
+        p1 = Person()
+        p2 = Person()
+        p3 = Person()       
+        p4 = Person()
+        p5 = Person()
+
+        date1 = "7 JAN 2010"
+        date2 = "8 FEB 2011"
+        date3 = "9 MAR 2012"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        date6 = "7 JAN 2170"
+        date7 = "8 FEB 2170"
+        date8 = "9 MAR 2180"
+        date9 = "10 APR 2180"
+        date10 = "11 MAY 1795"
+
+        p1.BIRT = date1
+        p1.DEAT = date8
+        self.assertEqual(us07(p1), False)
+        
+        p2.BIRT = date2
+        p2.DEAT = date5
+        self.assertEqual(us07(p2), True)
+
+        p3.BIRT = date3
+        p3.DEAT = date9
+        self.assertEqual(us07(p3), False)
+
+        p4.BIRT = date4
+        p4.DEAT = 'N/A'
+        self.assertEqual(us07(p4), True)
+
+        p5.BIRT = date10
+        p5.DEAT = 'N/A'
+        self.assertEqual(us07(p5), False)

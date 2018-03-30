@@ -166,6 +166,25 @@ def us06(person, family):
     print ('Error US06: Date of death of ' + person.NAME + ' (' + person._id + ') occurs before the date they were divorced.')
     return False
 
+def us07(person):
+    today = datetime.date.today()
+    if person.DEAT != 'N/A' and person.BIRT != 'N/A':
+        if dateverify(person.DEAT) and dateverify(person.BIRT):
+            death = date_format(person.DEAT)
+            birth = date_format(person.BIRT)
+            if (abs((death - birth).days) / 365.25) >= 150:
+                print ('Error US07: Date of death of ' + person.NAME + ' (' + person._id + ') is greater than 150 years after birth.')
+                return False
+            return True
+
+    if person.BIRT != 'N/A':
+        if dateverify(person.BIRT):
+            birth = date_format(person.BIRT)
+            if (abs((birth - today).days) / 365.25) >= 150:
+                print ('Error US07: Date of birth of ' + person.NAME + ' (' + person._id + ') is not in the last 150 years.')
+                return False
+            return True
+
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
             1:["NAME", "SEX", "BIRT", "DEAT","FAMC", "FAMS", "MARR", "HUSB", "WIFE", "CHIL", "DIV"], 
@@ -200,6 +219,7 @@ def gedcom(file_name):
             
             if level == 0:
                 if make_indiv == True:
+                    us07(person)
                     if person.BIRT != 'N/A' and person.DEAT != 'N/A': us03(person)
                     people[person._id] = person
                 make_indiv = False
