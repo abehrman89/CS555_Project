@@ -85,6 +85,13 @@ def deceasedlist(indi):
     print("List of the deceased: " + str(dlist))
     return didlist
 
+def deceasedidlist(indi):
+    didlist = []
+    for key,value in indi.items():
+        if value.DEAT != "N/A" and value.DEAT !="":
+            didlist.append(value._id)
+    return didlist
+
 def livingmarriedlist(indi, fam):
     #user story 30
     llist = []
@@ -94,7 +101,7 @@ def livingmarriedlist(indi, fam):
         if value.DEAT == "N/A":
             llist.append(value._id)
     for key,value in fam.items():
-        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedidlist(indi) and value.WIFE not in deceasedidlist(indi)):
             mlist.append(value.HUSB)
             mlist.append(value.WIFE)
     for i in llist:
@@ -113,7 +120,7 @@ def singlelist(indi, fam):
             if int(value.AGE) >= 30:
                 otlist.append(value._id)
     for key,value in fam.items():
-        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedidlist(indi) and value.WIFE not in deceasedidlist(indi)):
             mlist.append(value.HUSB)
             mlist.append(value.WIFE)
     for i in otlist:
