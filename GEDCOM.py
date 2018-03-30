@@ -85,6 +85,13 @@ def deceasedlist(indi):
     print("List of the deceased: " + str(dlist))
     return didlist
 
+def deceasedidlist(indi):
+    didlist = []
+    for key,value in indi.items():
+        if value.DEAT != "N/A" and value.DEAT !="":
+            didlist.append(value._id)
+    return didlist
+
 def livingmarriedlist(indi, fam):
     #user story 30
     llist = []
@@ -94,7 +101,7 @@ def livingmarriedlist(indi, fam):
         if value.DEAT == "N/A":
             llist.append(value._id)
     for key,value in fam.items():
-        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedidlist(indi) and value.WIFE not in deceasedidlist(indi)):
             mlist.append(value.HUSB)
             mlist.append(value.WIFE)
     for i in llist:
@@ -113,7 +120,7 @@ def singlelist(indi, fam):
             if int(value.AGE) >= 30:
                 otlist.append(value._id)
     for key,value in fam.items():
-        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedlist(indi) and value.WIFE not in deceasedlist(indi)):
+        if value.MARR != "N/A" and value.DIV == "N/A" and (value.HUSB not in deceasedidlist(indi) and value.WIFE not in deceasedidlist(indi)):
             mlist.append(value.HUSB)
             mlist.append(value.WIFE)
     for i in otlist:
@@ -158,6 +165,33 @@ def us05(person, family):
     print ('Error US05: Date of death of ' + person.NAME + ' (' + person._id + ') occurs before the date they were married.')
     return False
 
+def us06(person, family):
+    divorce = date_format(family.DIV)
+    death = date_format(person.DEAT)
+    if divorce < death:
+        return True
+    print ('Error US06: Date of death of ' + person.NAME + ' (' + person._id + ') occurs before the date they were divorced.')
+    return False
+
+def us07(person):
+    today = datetime.date.today()
+    if person.DEAT != 'N/A' and person.BIRT != 'N/A':
+        if dateverify(person.DEAT) and dateverify(person.BIRT):
+            death = date_format(person.DEAT)
+            birth = date_format(person.BIRT)
+            if (abs((death - birth).days) / 365.25) >= 150:
+                print ('Error US07: Date of death of ' + person.NAME + ' (' + person._id + ') is greater than 150 years after birth.')
+                return False
+            return True
+
+    if person.BIRT != 'N/A':
+        if dateverify(person.BIRT):
+            birth = date_format(person.BIRT)
+            if (abs((birth - today).days) / 365.25) >= 150:
+                print ('Error US07: Date of birth of ' + person.NAME + ' (' + person._id + ') is not in the last 150 years.')
+                return False
+            return True
+
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
             1:["NAME", "SEX", "BIRT", "DEAT","FAMC", "FAMS", "MARR", "HUSB", "WIFE", "CHIL", "DIV"], 
@@ -192,6 +226,7 @@ def gedcom(file_name):
             
             if level == 0:
                 if make_indiv == True:
+                    us07(person)
                     if person.BIRT != 'N/A' and person.DEAT != 'N/A': us03(person)
                     people[person._id] = person
                 make_indiv = False
@@ -207,9 +242,12 @@ def gedcom(file_name):
                     if family.MARR != 'N/A':
                         us02(people[family.HUSB], family)
                         us02(people[family.WIFE], family)
-                        if family.DIV != 'N/A': us04(family)
+                        if family.DIV != 'N/A': 
+                            us04(family)
+                            if people[family.HUSB].DEAT != 'N/A': us06(people[family.HUSB], family)
+                            if people[family.WIFE].DEAT != 'N/A': us06(people[family.WIFE], family)
                         if people[family.HUSB].DEAT != 'N/A': us05(people[family.HUSB], family)
-                        if people[family.WIFE].DEAT != 'N/A': us05(people[family.WIFE], family)                       
+                        if people[family.WIFE].DEAT != 'N/A': us05(people[family.WIFE], family)                         
                     make_fam = False
                 if tag == 'FAM' and make_fam == False:
                     make_fam = True
