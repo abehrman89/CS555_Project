@@ -339,3 +339,42 @@ class Test(unittest.TestCase):
         us31dic = {"@I1@":us31p1, "@I2@":us31p2, "@I3@":us31p3, "@I4":us31p4}
         us31dicf = {"@F1@":us31f1, "@F2@":us31f2}
         self.assertEqual(singlelist(us31dic, us31dicf), ["@I2@", "@I3@", "@I4@"])
+    
+    def test06(self):
+        p1 = Person()
+        p2 = Person()
+        p3 = Person()       
+        p4 = Person()
+        p5 = Person()
+
+        f1 = Family()
+        f2 = Family()
+        f3 = Family()
+        f4 = Family()
+        f5 = Family()
+
+        date1 = "7 JAN 2010"
+        date2 = "8 FEB 2011"
+        date3 = "9 MAR 2012"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        p1.DEAT = date1
+        f1.DIV = date2
+        self.assertEqual(us06(p1, f1), False)
+        
+        p2.DEAT = date2
+        f2.DIV = date1
+        self.assertEqual(us06(p2, f2), True)
+
+        p3.DEAT = date3
+        f3.DIV = date4
+        self.assertEqual(us06(p3, f3), False)
+
+        p4.DEAT = date5
+        f4.DIV = date4
+        self.assertEqual(us06(p4, f4), True)
+
+        p5.DEAT = date4
+        f5.DIV = date4
+        self.assertEqual(us06(p5, f5), False)
