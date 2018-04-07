@@ -4,7 +4,7 @@ import datetime
 from io import StringIO
 from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
 from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist, us06, us07
-from GEDCOM import us10
+from GEDCOM import us10, us21
 
 class Test(unittest.TestCase):
 
@@ -457,3 +457,37 @@ class Test(unittest.TestCase):
         p5.BIRT = date3
         f5.MARR = date4
         self.assertEqual(us10(p5, f5), False)
+    
+    def test21(self):
+        p1 = Person()
+        p1.SEX = 'M'
+        p1._id = '1'
+        p2 = Person()
+        p2.SEX = 'M'
+        p2._id = '2'
+        p3 = Person() 
+        p3.SEX = 'M' 
+        p3._id = '3'     
+        p4 = Person()
+        p4.SEX = 'F'
+        p4._id = '4'
+        p5 = Person()
+        p5.SEX = 'F'
+        p5._id = '5'
+
+        f1 = Family()
+        f1.WIFE = '1'
+        f2 = Family()
+        f2.HUSB = '2'
+        f3 = Family()
+        f3.WIFE = '3'
+        f4 = Family()
+        f4.HUSB = '4'
+        f5 = Family()
+        f5.WIFE = '5'
+
+        self.assertEqual(us21(p1, f1), False)
+        self.assertEqual(us21(p2, f2), True)
+        self.assertEqual(us21(p3, f3), False)
+        self.assertEqual(us21(p4, f4), False)
+        self.assertEqual(us21(p5, f5), True)

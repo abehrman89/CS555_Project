@@ -108,7 +108,7 @@
 2 GIVN Laura
 2 SURN Oliveto
 2 _MARNM Oliveto
-1 SEX M
+1 SEX F
 1 BIRT
 2 DATE 1 AUG 1987
 1 FAMC @F1@
@@ -117,7 +117,7 @@
 2 GIVN Laura
 2 SURN Oliveto
 2 _MARNM Oliveto
-1 SEX F
+1 SEX M
 1 BIRT
 2 DATE 1 AUG 2000
 1 FAMC @F2@
