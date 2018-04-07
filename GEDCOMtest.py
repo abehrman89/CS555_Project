@@ -4,6 +4,7 @@ import datetime
 from io import StringIO
 from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
 from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist, us06, us07
+from GEDCOM import us10
 
 class Test(unittest.TestCase):
 
@@ -417,3 +418,42 @@ class Test(unittest.TestCase):
         p5.BIRT = date10
         p5.DEAT = 'N/A'
         self.assertEqual(us07(p5), False)
+
+    def test10(self):
+        p1 = Person()
+        p2 = Person()
+        p3 = Person()       
+        p4 = Person()
+        p5 = Person()
+
+        f1 = Family()
+        f2 = Family()
+        f3 = Family()
+        f4 = Family()
+        f5 = Family()
+
+        date1 = "7 JAN 1980"
+        date2 = "8 FEB 1990"
+        date3 = "9 MAR 2003"
+        date4 = "10 APR 2013"
+        date5 = "11 MAY 2014"
+
+        p1.BIRT = date1
+        f1.MARR = date2
+        self.assertEqual(us10(p1, f1), False)
+        
+        p2.BIRT = date1
+        f2.MARR = date5
+        self.assertEqual(us10(p2, f2), True)
+
+        p3.BIRT = date2
+        f3.MARR = date3
+        self.assertEqual(us10(p3, f3), False)
+
+        p4.BIRT = date2
+        f4.MARR = date4
+        self.assertEqual(us10(p4, f4), True)
+
+        p5.BIRT = date3
+        f5.MARR = date4
+        self.assertEqual(us10(p5, f5), False)
