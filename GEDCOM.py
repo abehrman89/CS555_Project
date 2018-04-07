@@ -192,6 +192,13 @@ def us07(person):
                 return False
             return True
 
+def us10(person, family):
+    marriage_age = (date_format(family.MARR) - date_format(person.BIRT)).days/365.25
+    if (marriage_age < 14):
+        print ('Error US10: ' + person.NAME + ' (' + person._id + ') is under 14 years old and should not be married.')
+        return False
+    return True
+
 def gedcom(file_name):
     tags = {0:["INDI", "FAM", "HEAD", "TRLR", "NOTE"], 
             1:["NAME", "SEX", "BIRT", "DEAT","FAMC", "FAMS", "MARR", "HUSB", "WIFE", "CHIL", "DIV"], 
@@ -242,6 +249,8 @@ def gedcom(file_name):
                     if family.MARR != 'N/A':
                         us02(people[family.HUSB], family)
                         us02(people[family.WIFE], family)
+                        us10(people[family.HUSB], family)
+                        us10(people[family.WIFE], family)
                         if family.DIV != 'N/A': 
                             us04(family)
                             if people[family.HUSB].DEAT != 'N/A': us06(people[family.HUSB], family)
