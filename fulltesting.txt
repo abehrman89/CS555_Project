@@ -138,7 +138,103 @@
 2 _MARNM Oliveto
 1 SEX F
 1 BIRT
-2 DATE 12 AUG 1687
+2 DATE 12 AUG 1987
+0 @I14@ INDI
+1 NAME Gio /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX M
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I15@ INDI
+1 NAME Marie /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I16@ INDI
+1 NAME Frannie /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I17@ INDI
+1 NAME Katie /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I18@ INDI
+1 NAME Dana /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I19@ INDI
+1 NAME Haley /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I20@ INDI
+1 NAME Laurie /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I21@ INDI
+1 NAME Lena /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I22@ INDI
+1 NAME Gina /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I23@ INDI
+1 NAME Jenn /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I24@ INDI
+1 NAME Julia /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
+0 @I25@ INDI
+1 NAME Darcy /Oliveto/
+2 GIVN Steven
+2 SURN Oliveto
+2 _MARNM Oliveto
+1 SEX F
+1 BIRT
+2 DATE 12 AUG 1987
 0 @F1@ FAM
 1 MARR
 2 DATE 1 JUN 1810
@@ -147,6 +243,18 @@
 1 CHIL @I1@
 1 CHIL @I4@
 1 CHIL @I5@
+1 CHIL @I14@
+1 CHIL @I15@
+1 CHIL @I16@
+1 CHIL @I17@
+1 CHIL @I18@
+1 CHIL @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 CHIL @I23@
+1 CHIL @I24@
+1 CHIL @I25@
 1 _CURRENT N
 0 @F2@ FAM
 1 HUSB @I7@

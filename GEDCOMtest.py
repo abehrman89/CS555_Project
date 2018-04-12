@@ -4,7 +4,7 @@ import datetime
 from io import StringIO
 from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
 from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist, us06, us07
-from GEDCOM import us10, us21
+from GEDCOM import us10, us21, childcheck
 
 class Test(unittest.TestCase):
 
@@ -491,3 +491,50 @@ class Test(unittest.TestCase):
         self.assertEqual(us21(p3, f3), False)
         self.assertEqual(us21(p4, f4), False)
         self.assertEqual(us21(p5, f5), True)
+
+    def test15(self):
+        us15p1 = Person()
+        us15p2 = Person()
+        us15p3 = Person()
+        us15p4 = Person()
+        us15p5 = Person()
+        us15p6 = Person()
+        us15p7 = Person()
+        us15p8 = Person()
+        us15p9 = Person()
+        us15p10 = Person()
+        us15p11 = Person()
+        us15p12 = Person()
+        us15p13 = Person()
+        us15p14 = Person()
+        us15p15 = Person()
+
+
+        us15f1 = Family()
+        fam = {"@F1@":us15f1}
+
+        us15f1.CHIL.append(us15p1)
+        self.assertEqual(childcheck(fam), True)
+
+        us15f1.CHIL.append(us15p2)
+        us15f1.CHIL.append(us15p3)
+        us15f1.CHIL.append(us15p4)
+        us15f1.CHIL.append(us15p5)
+        us15f1.CHIL.append(us15p6)
+        us15f1.CHIL.append(us15p7)
+        self.assertEqual(childcheck(fam), True)
+
+        us15f1.CHIL.append(us15p8)
+        us15f1.CHIL.append(us15p9)
+        us15f1.CHIL.append(us15p10)
+        us15f1.CHIL.append(us15p11)
+        us15f1.CHIL.append(us15p12)
+        self.assertEqual(childcheck(fam), True)
+
+        us15f1.CHIL.append(us15p13)
+        us15f1.CHIL.append(us15p14)
+        self.assertEqual(childcheck(fam), True)
+
+        us15f1.CHIL.append(us15p15)
+        self.assertEqual(childcheck(fam), False)
+        
