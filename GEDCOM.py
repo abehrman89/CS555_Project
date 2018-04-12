@@ -37,9 +37,20 @@ def date_format(date):
     months = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6, 
                 'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12}
     split_date = date.split(' ')
-    d = int(split_date[0])
-    m = months[split_date[1]]
-    y = int(split_date[2])
+    #user story 41
+    if len(split_date) < 3:
+        if split_date[0] in months:
+            d = 1
+            m = months[split_date[0]]
+            y = int(split_date[1])
+        if len(split_date) == 1:
+            d = 1
+            m = 1
+            y = int(split_date[0])
+    else:
+        d = int(split_date[0])
+        m = months[split_date[1]]
+        y = int(split_date[2])
     date = datetime.date(y, m, d)
     return date
 
