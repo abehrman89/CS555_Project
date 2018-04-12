@@ -82,7 +82,7 @@ def deceasedlist(indi):
         if value.DEAT != "N/A" and value.DEAT !="":
             dlist.append(value.NAME + ", " + value._id)
             didlist.append(value._id)
-    print("List of the deceased: " + str(dlist))
+    print("US 29: List of the deceased: " + str(dlist))
     return didlist
 
 def deceasedidlist(indi):
@@ -107,7 +107,7 @@ def livingmarriedlist(indi, fam):
     for i in llist:
         if i in mlist:
             lmlist.append(i)
-    print("List of living and married: " + str(lmlist))
+    print("US 30: List of living and married: " + str(lmlist))
     return lmlist
 
 def singlelist(indi, fam):
@@ -126,8 +126,16 @@ def singlelist(indi, fam):
     for i in otlist:
         if i not in mlist:
             sotlist.append(i)
-    print("List of single and over 30: " + str(sotlist))
+    print("US 31: List of single and over 30: " + str(sotlist))
     return sotlist
+
+def childcheck(fam):
+    #user story 15
+    for key,value in fam.items():
+        if len(value.CHIL) >= 15:
+            print("Error US15: Family " + value._id + " has 15 or more children.")
+            return False
+    return True
 
 def findage(date):
     #user story 27
@@ -320,6 +328,7 @@ def gedcom(file_name):
 def main():
     ppl, fam = gedcom("fulltesting.txt")
     datecheck(ppl, fam)
+    childcheck(fam)
     print_people(ppl)
     print_family(fam)
     deceasedlist(ppl)
