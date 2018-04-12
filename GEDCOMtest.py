@@ -4,7 +4,7 @@ import datetime
 from io import StringIO
 from GEDCOM import dateverify, us03, Person, Family, us02, dbeforecurrent, us04
 from GEDCOM import deceasedlist, us05, findage, livingmarriedlist, singlelist, us06, us07
-from GEDCOM import us10, us21, childcheck
+from GEDCOM import us10, us21, childcheck, date_format
 
 class Test(unittest.TestCase):
 
@@ -538,3 +538,9 @@ class Test(unittest.TestCase):
         us15f1.CHIL.append(us15p15)
         self.assertEqual(childcheck(fam), False)
         
+    def test41(self):
+        self.assertEqual(date_format("APR 2014"), datetime.date(2014, 4, 1))
+        self.assertEqual(date_format("JAN 1999"), datetime.date(1999, 1, 1))
+        self.assertEqual(date_format("1969"), datetime.date(1969, 1, 1))
+        self.assertEqual(date_format("DEC 2003"), datetime.date(2003, 12, 1))
+        self.assertEqual(date_format("2018"), datetime.date(2018, 1, 1))
